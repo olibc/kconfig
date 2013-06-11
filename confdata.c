@@ -128,7 +128,7 @@ static int conf_set_sym_val(struct symbol *sym, int def, int def_flags, char *p)
 			break;
 		}
 	case S_BOOLEAN:
-		if (p[0] == 'y') {
+		if (strcmp(p, "true") == 0) {
 			sym->def[def].tri = yes;
 			sym->flags |= def_flags;
 			break;
@@ -456,7 +456,7 @@ static void conf_write_symbol(struct symbol *sym, FILE *out, bool write_no)
 			fprintf(out, "%s=m\n", sym->name);
 			break;
 		case yes:
-			fprintf(out, "%s=y\n", sym->name);
+			fprintf(out, "%s=true\n", sym->name);
 			break;
 		}
 		break;

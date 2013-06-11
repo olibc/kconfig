@@ -13,8 +13,8 @@
 #include "lkc.h"
 
 struct symbol symbol_yes = {
-	.name = "y",
-	.curr = { "y", yes },
+	.name = "true",
+	.curr = { "true", yes },
 	.flags = SYMBOL_CONST|SYMBOL_VALID,
 }, symbol_mod = {
 	.name = "m",
