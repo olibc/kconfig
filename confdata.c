@@ -148,6 +148,10 @@ static int conf_set_sym_val(struct symbol *sym, int def, int def_flags, char *p)
 			goto done;
 		}
 	case S_STRING:
+		p2 = p;
+		while (*p2++ != '\n');
+		*p2 = '\0';
+#if 0
 		if (*p++ != '"')
 			break;
 		for (p2 = p; (p2 = strpbrk(p2, "\"\\")); p2++) {
@@ -161,6 +165,7 @@ static int conf_set_sym_val(struct symbol *sym, int def, int def_flags, char *p)
 			conf_warning("invalid string found");
 			return 1;
 		}
+#endif
 	case S_INT:
 	case S_HEX:
 	done:
@@ -424,7 +429,7 @@ static void conf_write_string(bool headerfile, const char *name,
 	if (headerfile)
 		fprintf(out, "#define %s \"", name);
 	else
-		fprintf(out, "%s=\"", name);
+		fprintf(out, "%s=", name);
 
 	while (1) {
 		l = strcspn(str, "\"\\");
@@ -436,7 +441,7 @@ static void conf_write_string(bool headerfile, const char *name,
 			break;
 		fprintf(out, "\\%c", *str++);
 	}
-	fputs("\"\n", out);
+	fputs("\n", out);
 }
 
 static void conf_write_symbol(struct symbol *sym, FILE *out, bool write_no)
